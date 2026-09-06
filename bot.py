@@ -1,6 +1,8 @@
 import asyncio
+from http.server import BaseHTTPRequestHandler, HTTPServer
 import logging
 import os
+import threading
 from telegram import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
@@ -18,8 +20,8 @@ from telegram.ext import (
 # ==============================================================================
 # CONFIGURATION & LINKS
 # ==============================================================================
-BOT_TOKEN = "8345049769:AAGpuJK0RNAARREQRfrUNy8V4wLLNNrhr1A"
-TELEGRAM_CHANNEL = "@dudedex"
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "8345049769:AAGpuJK0RNAARREQRfrUNy8V4wLLNNrhr1A")
+TELEGRAM_CHANNEL = os.environ.get("TELEGRAM_CHANNEL", "@dudedex")
 TELEGRAM_CHANNEL_LINK = "https://t.me/dudedex"
 WHATSAPP_CHANNEL_LINK = "https://whatsapp.com/channel/0029Vb7njM26GcGIDj2Lib37"
 YOUTUBE_CHANNEL_LINK = "https://www.youtube.com/@DudeDex"
@@ -27,7 +29,7 @@ APP_DOWNLOAD_LINK = "https://dudedex.cloud/app/D-DEX.apk"
 WEB_APP_LINK = "https://wallet.dudedex.cloud/"
 
 # Delay between task steps (in seconds)
-DELAY_SECONDS = 15
+DELAY_SECONDS = int(os.environ.get("DELAY_SECONDS", "15"))
 
 # Image Paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -42,6 +44,31 @@ logging.basicConfig(
     level=logging.INFO,
 )
 logger = logging.getLogger(__name__)
+
+
+# ==============================================================================
+# HEALTH CHECK SERVER (FOR CLOUD DEPLOYMENTS / RENDER)
+# ==============================================================================
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b"OK - DUDE DEX Telegram Bot is running")
+
+    def log_message(self, format, *args):
+        return  # Suppress noisy HTTP logs
+
+
+def start_health_server() -> None:
+    port = int(os.environ.get("PORT", "8080"))
+    try:
+        server = HTTPServer(("0.0.0.0", port), HealthCheckHandler)
+        logger.info(f"Health check server listening on port {port}")
+        server.serve_forever()
+    except Exception as e:
+        logger.warning(f"Could not start health check server: {e}")
+
 
 
 # ==============================================================================
@@ -371,6 +398,10 @@ def main() -> None:
     Initializes and starts the Telegram Bot application.
     """
     logger.info("Starting DUDE DEX Airdrop Bot with enhanced rich styling...")
+
+    # Start health check server for cloud hosting / Render
+    health_thread = threading.Thread(target=start_health_server, daemon=True)
+    health_thread.start()
 
     application = Application.builder().token(BOT_TOKEN).build()
 
