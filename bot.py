@@ -341,7 +341,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         reward_keyboard = [
             [
                 InlineKeyboardButton("📱 Download Android App", url=APP_DOWNLOAD_LINK),
-                InlineKeyboardButton("🌐 Launch Web Wallet", url=WEB_APP_LINK),
+                InlineKeyboardButton("🌐 IOS & Launch Web Wallet", url=WEB_APP_LINK),
             ]
         ]
 
@@ -378,7 +378,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             "━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
             "1️⃣ <b>Install &amp; Open:</b> Download the D-DEX APK or launch the Web Wallet.\n"
             "2️⃣ <b>Create / Connect:</b> Set up your Web3 wallet securely (BNB Smart Chain).\n"
-            "3️⃣ <b>Claim Reward:</b> Go to the <b>Rewards / Airdrop</b> section.\n"
+            "3️⃣ <b>Claim Reward:</b> Go to the <b>Trade </b> section and Register make sure have some BNB for Fees.\n"
             "4️⃣ <b>Instant Credit:</b> Your $5 reward balance activates immediately!\n"
             "5️⃣ <b>Play, Trade &amp; Withdraw:</b> Use your balance for P2P trades, token swaps, staking yields, or Web3 games.\n\n"
             "🔒 <b>Security Reminder:</b> Never share your wallet seed phrase or private key with anyone. D-DEX will never ask for your recovery phrase."
