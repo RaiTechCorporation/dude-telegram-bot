@@ -63,7 +63,7 @@ Important: Do NOT use any database, JSON file, or external storage. Everything s
 
 ### Variables to include at the top:
 
-BOT_TOKEN = "8345049769:AAGpuJK0RNAARREQRfrUNy8V4wLLNNrhr1A"
+BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"
 TELEGRAM_CHANNEL = "@dudedex"
 TELEGRAM_CHANNEL_LINK = "https://t.me/dudedex"
 WHATSAPP_CHANNEL_LINK = "https://whatsapp.com/channel/0029Vb7njM26GcGIDj2Lib37"

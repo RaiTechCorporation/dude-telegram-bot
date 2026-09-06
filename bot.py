@@ -1,7 +1,9 @@
 import asyncio
+from dotenv import load_dotenv
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import logging
 import os
+import sys
 import threading
 from telegram import (
     InlineKeyboardButton,
@@ -17,10 +19,16 @@ from telegram.ext import (
     ContextTypes,
 )
 
+# Load environment variables from .env file (for local development)
+load_dotenv()
+
 # ==============================================================================
 # CONFIGURATION & LINKS
 # ==============================================================================
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "8345049769:AAGpuJK0RNAARREQRfrUNy8V4wLLNNrhr1A")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+if not BOT_TOKEN:
+    print("ERROR: BOT_TOKEN is not set in environment or .env file!", file=sys.stderr)
+
 TELEGRAM_CHANNEL = os.environ.get("TELEGRAM_CHANNEL", "@dudedex")
 TELEGRAM_CHANNEL_LINK = "https://t.me/dudedex"
 WHATSAPP_CHANNEL_LINK = "https://whatsapp.com/channel/0029Vb7njM26GcGIDj2Lib37"
