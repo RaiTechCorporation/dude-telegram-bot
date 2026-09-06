@@ -1,0 +1,74 @@
+Create a complete Telegram Bot in Python using `python-telegram-bot` (version 20+) for an airdrop campaign called **DUDE DEX Airdrop**.
+
+Important: Do NOT use any database, JSON file, or external storage. Everything should work purely inside Telegram using only messages, buttons, and callbacks.
+
+### Bot Flow:
+
+1. When user sends `/start`:
+   - Send this exact welcome message:
+
+   🎉 Welcome to the DUDE DEX Airdrop! 🎁
+
+   To participate in the airdrop, you must complete the tasks below.
+   ⚠️ Step 1 is mandatory. You must join our official Telegram channel first.
+
+   📢 Step 1 — Join Telegram Channel
+   Join our official Telegram channel to receive the latest DUDE DEX updates, announcements, and airdrop information.
+
+   👇 Click the button below:
+
+   - Show two buttons:
+     - 📢 JOIN TELEGRAM CHANNEL (URL button)
+     - ✅ VERIFY TELEGRAM JOIN (callback button)
+
+2. When user clicks **VERIFY TELEGRAM JOIN**:
+   - Check if the user has joined the Telegram channel using `get_chat_member`.
+   - If not joined → show alert “Please join the channel first”.
+   - If joined → edit the message and show:
+     - 💬 Step 2 — Join WhatsApp Channel
+     - Button: ▶️ Join WhatsApp Channel (URL)
+   - After exactly 15 seconds, send a new message with button: ✅ I have joined
+
+3. When user clicks **I have joined** (WhatsApp):
+   - Show:
+     - 📱 Step 3 — Subscribe to YouTube Channel
+     - Button: ▶️ Subscribe YouTube (URL)
+   - After exactly 15 seconds, send a new message with button: ✅ I have subscribed
+
+4. When user clicks **I have subscribed**:
+   - Send this final message:
+
+   🎉 Congratulations!
+   You have completed all tasks.
+   Now download our app and claim your $5 asset instantly.
+   Use this asset to play, trade and withdraw with our D-DEX wallet.
+
+   - Two buttons:
+     - 📱 Download App (URL)
+     - 🌐 Use with Web (URL)
+
+   - Then send a short guide message explaining how to claim the airdrop.
+
+### Technical Requirements:
+
+- Use only `python-telegram-bot` v20+ (async).
+- No database, no file storage, no user tracking.
+- Everything should work only through Telegram messages and inline buttons.
+- Use InlineKeyboardButton + CallbackQueryHandler.
+- Use `asyncio.sleep(15)` for the 15-second delays.
+- Put all configurable values (token + links) clearly at the top of the code.
+- Handle errors properly (especially channel membership check).
+- Code should be clean, well-commented, and ready to run.
+- Bot must be admin in the Telegram channel for verification to work.
+
+### Variables to include at the top:
+
+BOT_TOKEN = "8345049769:AAGpuJK0RNAARREQRfrUNy8V4wLLNNrhr1A"
+TELEGRAM_CHANNEL = "@dudedex"
+TELEGRAM_CHANNEL_LINK = "https://t.me/dudedex"
+WHATSAPP_CHANNEL_LINK = "https://whatsapp.com/channel/0029Vb7njM26GcGIDj2Lib37"
+YOUTUBE_CHANNEL_LINK = "https://www.youtube.com/@DudeDex"
+APP_DOWNLOAD_LINK = "https://dudedex.cloud/app/D-DEX.apk"
+WEB_APP_LINK = "https://wallet.dudedex.cloud/"
+
+Generate the full working code with proper structure (`start` handler + `button_handler`).
